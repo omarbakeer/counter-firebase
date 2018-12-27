@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import * as firebase from "firebase";
 import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -10,7 +11,51 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Typography from "@material-ui/core/Typography";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timer: 40,
+      counter: 0,
+      isTimerOn: false
+    };
+    this.timerInterval = null;
+  }
+
+  startTimer = () => {
+    this.setState(() => ({ isTimerOn: true }));
+    this.timerInterval = setInterval(() => {
+      this.setState(prevState => ({
+        timer: prevState.timer - 1
+      }));
+      if (this.state.timer === -1) {
+        firebase
+          .database()
+          .ref("timeStamps")
+          .push(new Date().toLocaleString());
+        this.setState(prevState => ({
+          timer: 39,
+          counter: prevState.counter + 1
+        }));
+      }
+    }, 1000);
+  };
+
+  stopTimer = () => {
+    clearInterval(this.timerInterval);
+    this.setState(() => ({ isTimerOn: false }));
+  };
+
+  clearCounterAndTimer = () => {
+    clearInterval(this.timerInterval);
+    this.setState(() => ({
+      timer: 40,
+      counter: 0,
+      isTimerOn: false
+    }));
+  };
+
   render() {
+    const { timer, counter, isTimerOn } = this.state;
     return (
       <Grid
         container
@@ -20,33 +65,23 @@ class App extends Component {
         style={{ height: "100vh" }}
       >
         <Grid container justify="center">
-          <Button
-            // onClick={() => this.props.history.push("/list")}
-            style={{ height: "20vh", width: "15vw" }}
+          <StyleButton
+            variant="outlined"
+            onClick={isTimerOn ? this.stopTimer : this.startTimer}
           >
-            Pause
-          </Button>
-          <Button
-            // onClick={() => this.props.history.push("/list")}
-            style={{ height: "20vh", width: "15vw" }}
-          >
+            {isTimerOn ? "Pause" : "Start"}
+          </StyleButton>
+          <StyleButton variant="outlined" onClick={this.clearCounterAndTimer}>
             clear
-          </Button>
-          <Button
+          </StyleButton>
+          <StyleButton
+            variant="outlined"
             onClick={() => this.props.history.push("/list")}
-            style={{ height: "20vh", width: "20vw" }}
           >
-            Go to the list <ArrowForwardIcon />{" "}
-          </Button>
+            Go to the list <ArrowForwardIcon />
+          </StyleButton>
         </Grid>
-        <Card
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            height: "50vh",
-            width: "50vw"
-          }}
-        >
+        <StyledCard>
           <Grid
             container
             item
@@ -56,7 +91,7 @@ class App extends Component {
             xs={6}
           >
             <CardHeader title="Timer" />
-            <StyledContent>40</StyledContent>
+            <StyledNumber>{timer}</StyledNumber>
           </Grid>
           <Pipe />
           <Grid
@@ -68,10 +103,10 @@ class App extends Component {
             xs={6}
           >
             <CardHeader title="Counter" />
-            <StyledContent>5</StyledContent>
+            <StyledNumber>{counter}</StyledNumber>
           </Grid>
-        </Card>
-        <Typography style={{ marginTop: "30px" }}>
+        </StyledCard>
+        <Typography style={{ marginTop: "30px", marginBottom: "30px" }}>
           Made by Omar Bakier
         </Typography>
       </Grid>
@@ -79,7 +114,22 @@ class App extends Component {
   }
 }
 
-const StyledContent = styled(CardContent)`
+const StyleButton = styled(Button)`
+  && {
+    margin: 16px;
+    height: 20vh;
+    width: 15vw;
+  }
+`;
+const StyledCard = styled(Card)`
+  && {
+    display: flex;
+    flex-direction: row;
+    height: 50vh;
+    width: 50vw;
+  }
+`;
+const StyledNumber = styled(CardContent)`
   && {
     font-size: 112px;
   }
