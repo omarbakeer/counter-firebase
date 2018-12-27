@@ -19,12 +19,26 @@ class App extends Component {
         alignItems="center"
         style={{ height: "100vh" }}
       >
-        <Button
-          onClick={() => this.props.history.push("/list")}
-          style={{ position: "absolute", top: "70px", right: "20%" }}
-        >
-          Go to the list <ArrowForwardIcon />{" "}
-        </Button>
+        <Grid container justify="center">
+          <Button
+            // onClick={() => this.props.history.push("/list")}
+            style={{ height: "20vh", width: "15vw" }}
+          >
+            Pause
+          </Button>
+          <Button
+            // onClick={() => this.props.history.push("/list")}
+            style={{ height: "20vh", width: "15vw" }}
+          >
+            clear
+          </Button>
+          <Button
+            onClick={() => this.props.history.push("/list")}
+            style={{ height: "20vh", width: "20vw" }}
+          >
+            Go to the list <ArrowForwardIcon />{" "}
+          </Button>
+        </Grid>
         <Card
           style={{
             display: "flex",

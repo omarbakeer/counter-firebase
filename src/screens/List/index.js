@@ -10,7 +10,8 @@ import Button from "@material-ui/core/Button";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import Typography from "@material-ui/core/Typography";
-export default class Routes extends Component {
+
+export default class TimestampList extends Component {
   render() {
     return (
       <Grid
@@ -18,16 +19,16 @@ export default class Routes extends Component {
         direction="column"
         justify="center"
         alignItems="center"
-        style={{ height: "100vh" }}
+        style={{ marginTop: "30px", marginBottom: "20px" }}
       >
         <Button
           onClick={() => this.props.history.push("/")}
-          style={{ position: "absolute", top: "70px", left: "10%" }}
+          style={{ position: "relative", right: "20%", marginBottom: "20px" }}
         >
           <ArrowBack />
           Go to the App
         </Button>
-        <Card style={{ width: "50vw" }}>
+        <Card style={{ width: "50vw", height: "100%" }}>
           <List
             subheader={
               <ListSubheader
