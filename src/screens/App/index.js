@@ -1,19 +1,30 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { withRouter } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import Typography from "@material-ui/core/Typography";
 
 class App extends Component {
   render() {
     return (
       <Grid
         container
+        direction="column"
         justify="center"
         alignItems="center"
         style={{ height: "100vh" }}
       >
+        <Button
+          onClick={() => this.props.history.push("/list")}
+          style={{ position: "absolute", top: "70px", right: "20%" }}
+        >
+          Go to the list <ArrowForwardIcon />{" "}
+        </Button>
         <Card
           style={{
             display: "flex",
@@ -46,6 +57,9 @@ class App extends Component {
             <StyledContent>5</StyledContent>
           </Grid>
         </Card>
+        <Typography style={{ marginTop: "30px" }}>
+          Made by Omar Bakier
+        </Typography>
       </Grid>
     );
   }
@@ -65,4 +79,4 @@ const Pipe = styled.div`
   }
 `;
 
-export default App;
+export default withRouter(App);
