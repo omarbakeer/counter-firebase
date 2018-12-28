@@ -37,6 +37,10 @@ export default class App extends Component {
     }
   };
 
+  componentWillUnmount = () => {
+    clearInterval(this.timerInterval);
+  };
+
   startTimer = () => {
     this.setState(() => ({ isTimerOn: true }));
     this.timerInterval = setInterval(() => {

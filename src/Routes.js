@@ -7,7 +7,7 @@ import NotFound from "./screens/NotFound404";
 export default class Routes extends Component {
   render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/list" component={TimestampList} />
