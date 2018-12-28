@@ -1,4 +1,4 @@
-#Counter-Firebase-Timestamps
+# Counter-Firebase-Timestamps
 
 So this is just an App that has a timer set to 40sec, and once it finishes, it adds a timestamp in the database of the firebase. Another screen will retrieve all the entries and list them in order.
 
