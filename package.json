@@ -2,6 +2,7 @@
   "name": "counter-firebase",
   "version": "0.1.0",
   "private": true,
+  "author": "Omar Bakier",
   "dependencies": {
     "@material-ui/core": "^3.7.1",
     "@material-ui/icons": "^3.0.1",
