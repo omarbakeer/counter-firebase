@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import * as firebase from "firebase";
-import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -10,7 +10,11 @@ import Button from "@material-ui/core/Button";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Typography from "@material-ui/core/Typography";
 
-class App extends Component {
+export default class App extends Component {
+  static propTypes = {
+    history: PropTypes.object
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +24,18 @@ class App extends Component {
     };
     this.timerInterval = null;
   }
+
+  componentDidMount = async () => {
+    try {
+      const snapshot = await firebase
+        .database()
+        .ref("timeStamps")
+        .once("value");
+      this.setState(() => ({ counter: snapshot.numChildren() }));
+    } catch (e) {
+      console.warn(e);
+    }
+  };
 
   startTimer = () => {
     this.setState(() => ({ isTimerOn: true }));
@@ -46,6 +62,10 @@ class App extends Component {
   };
 
   clearCounterAndTimer = () => {
+    firebase
+      .database()
+      .ref("timeStamps")
+      .remove();
     clearInterval(this.timerInterval);
     this.setState(() => ({
       timer: 40,
@@ -106,9 +126,7 @@ class App extends Component {
             <StyledNumber>{counter}</StyledNumber>
           </Grid>
         </StyledCard>
-        <Typography style={{ marginTop: "30px", marginBottom: "30px" }}>
-          Made by Omar Bakier
-        </Typography>
+        <Typography style={{ marginTop: "30px" }}>Made by O.Bakier</Typography>
       </Grid>
     );
   }
@@ -142,5 +160,3 @@ const Pipe = styled.div`
     margin: auto;
   }
 `;
-
-export default withRouter(App);

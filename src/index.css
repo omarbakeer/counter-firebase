@@ -16,8 +16,7 @@ code {
 
 /*#region 404 Page Styls */
 .notfound-container {
-  background-color: #0066cc;
-  color: #fff;
+  color: #000;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,17 +39,17 @@ code {
   }
 }
 .notfound-container button {
-  background-color: #fff;
-  border: 2px solid #fff;
+  background-color: #d3d3d3;
+  border: 2px solid #000;
   border-radius: 10px;
   padding: 10px 30px;
   font-size: 18px;
   font-weight: bold;
-  color: #0066cc;
+  color: #000;
   cursor: pointer;
 }
 .notfound-container button:hover {
-  background-color: #0066cc;
+  background-color: #000;
   color: #fff;
 }
 /*#endregion*/

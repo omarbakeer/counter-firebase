@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class NotFound extends Component {
-  render() {
-    return (
-      <div className="notfound-container">
-        <h1>404</h1>
-        <p>Ooops, Something Went Wrong</p>
-        <button onClick={() => (window.location.href = "/")}>
-          Back to home
-        </button>
-      </div>
-    );
-  }
-}
+const NotFound = props => {
+  return (
+    <div className="notfound-container">
+      <h1>404</h1>
+      <p>Ooops, Something Went Wrong</p>
+      <button onClick={() => props.history.push("/")}>Back to home</button>
+    </div>
+  );
+};
+
+export default NotFound;
