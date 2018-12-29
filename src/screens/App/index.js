@@ -31,7 +31,14 @@ export default class App extends Component {
         .database()
         .ref("timeStamps")
         .once("value");
-      this.setState(() => ({ counter: snapshot.numChildren() }));
+      const timer = await firebase
+        .database()
+        .ref("timer")
+        .once("value");
+      this.setState(() => ({
+        counter: snapshot.numChildren(),
+        timer: timer.val()
+      }));
     } catch (e) {
       console.warn(e);
     }
@@ -39,6 +46,10 @@ export default class App extends Component {
 
   componentWillUnmount = () => {
     clearInterval(this.timerInterval);
+    firebase
+      .database()
+      .ref("timer")
+      .set(this.state.timer);
   };
 
   startTimer = () => {
